@@ -1,0 +1,14 @@
+
+<div class="search-form">
+  <%= form_with url: search_events_path, method: :get, local: true do |f| %>
+    <%= f.label :title, "キーワード" %>
+    <%= f.text_field :title %>
+
+    <%= f.label :start_datetime, "開催日" %>
+    <%= f.text_field :start_datetime %>〜
+
+    <%= f.text_field :end_datetime %>
+
+    <%= f.submit "検索" %>
+  <% end %>
+</div>
