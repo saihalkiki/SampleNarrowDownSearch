@@ -7,4 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 20.times do |n|
   Event.create(title: "イベント#{n+1}",start_datetime: "2019-11-#{n+1} #{n+1}:00:00",end_datetime: "2019-11-#{n+1} #{n+4}:00:00")
+  Event.create(title: "勉強会#{n+1}",start_datetime: "2019-11-#{n+1} #{n+1}:00:00",end_datetime: "2019-11-#{n+1} #{n+4}:00:00")
 end

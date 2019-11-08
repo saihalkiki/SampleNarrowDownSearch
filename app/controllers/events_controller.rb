@@ -62,12 +62,23 @@ class EventsController < ApplicationController
   end
 
   def search
-      if params[:title].present?
-        @events = Event.where('title LIKE ?', "%#{params[:title]}%")
-      else
-        @events = Event.none
-        flash[:notice] = "検索該当がありません"
+    @keyword = params[:keyword]
+    @start_date_from = params[:start_date_from]
+    @start_date_to = params[:start_date_to]
+    if params[:keyword].blank? && params[:start_date_from].blank? && params[:start_date_to].blank?
+      redirect_to events_url
+    else
+      @events = Event.all
+      @events = @events.where('title LIKE ?', "%#{params[:keyword]}%") if params[:keyword].present?
+      if params[:start_date_from].present? && params[:start_date_to].present?
+        @events = @events.where(start_datetime: "#{params[:start_date_from]}".."#{params[:start_date_to]+' 23:59:59'}")
+      elsif params[:start_date_from].present?
+          @events = @events.where('start_datetime >= ?',"#{params[:start_date_from]}")
+      elsif params[:start_date_to].present?
+          @events = @events.where('start_datetime <= ?',"#{params[:start_date_to] +' 23:59:59'}")
       end
+      flash.now[:notice] = "イベントは見つかりませんでした" if @events.blank?
+    end
   end
 
   private
