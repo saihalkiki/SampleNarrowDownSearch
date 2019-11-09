@@ -12,18 +12,23 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :title %>
+    <%= form.label :title,"タイトル" %>
     <%= form.text_field :title %>
   </div>
 
   <div class="field">
-    <%= form.label :start_datetime %>
+    <%= form.label :start_datetime,"開催日時" %>
     <%= form.datetime_select :start_datetime %>
   </div>
 
   <div class="field">
-    <%= form.label :end_datetime %>
+    <%= form.label :end_datetime,"終了日時" %>
     <%= form.datetime_select :end_datetime %>
+  </div>
+
+  <div class="field">
+    <%= form.label :prefecture, "開催エリア" %>
+    <%= form.select(:prefecture, options_for_select([[''],['東京都'], ['大阪府'],['神奈川県'],['愛知県'] ])) %>
   </div>
 
   <div class="actions">

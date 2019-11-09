@@ -8,6 +8,9 @@
     <%= f.date_field :start_date_from, value: @start_date_from %>〜
     <%= f.date_field :start_date_to, value: @start_date_to %>
 
+    <%= f.label :prefecture_to, "開催エリア" %>
+    <%#= f.text_field :prefecture_to, value: @prefecture_to %>
+    <%= f.select(:prefecture_to, options_for_select([[''],['東京都'], ['大阪府'],['神奈川県'],['愛知県'] ])) %>
     <%= f.submit "検索" %>
   <% end %>
 </div>
