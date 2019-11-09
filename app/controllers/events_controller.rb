@@ -62,25 +62,21 @@ class EventsController < ApplicationController
   end
 
   def search
+    @events = Event.all
     @keyword = params[:keyword]
     @start_date_from = params[:start_date_from]
     @start_date_to = params[:start_date_to]
     @prefecture_to = params[:prefecture_to]
-    if params[:keyword].blank? && params[:start_date_from].blank? && params[:start_date_to].blank? && params[:prefecture_to].blank?
-      @events = Event.all
-    else
-      @events = Event.all
-      @events = @events.where('title LIKE ?', "%#{params[:keyword]}%") if params[:keyword].present?
-      @events = @events.where('prefecture = ?', "#{params[:prefecture_to]}") if params[:prefecture_to].present?
-      if params[:start_date_from].present? && params[:start_date_to].present?
-        @events = @events.where(start_datetime: "#{params[:start_date_from]}".."#{params[:start_date_to]+' 23:59:59'}")
-      elsif params[:start_date_from].present?
-          @events = @events.where('start_datetime >= ?',"#{params[:start_date_from]}")
-      elsif params[:start_date_to].present?
-          @events = @events.where('start_datetime <= ?',"#{params[:start_date_to] +' 23:59:59'}")
-      end
-      flash.now[:notice] = "イベントは見つかりませんでした" if @events.blank?
+    @events = @events.where('title LIKE ?', "%#{@keyword}%") if @keyword.present?
+    @events = @events.where('prefecture = ?', "#{@prefecture_to}") if @prefecture_to.present?
+    if @start_date_from.present? && @start_date_to.present?
+      @events = @events.where(start_datetime: "#{@start_date_from}".."#{@start_date_to+' 23:59:59'}")
+    elsif @start_date_from.present?
+        @events = @events.where('start_datetime >= ?',"#{@start_date_from}")
+    elsif @start_date_to.present?
+        @events = @events.where('start_datetime <= ?',"#{@start_date_to +' 23:59:59'}")
     end
+    flash.now[:notice] = "イベントは見つかりませんでした" if @events.blank?
     render "index"
   end
 
